@@ -6,21 +6,21 @@
       background-color: #D3D3D3;
     }
   </style>
-  <h2>Data as of date {{ covid_date }} UTC</h2>
+  <h3>Data as of date {{ covid_date }} UTC</h3>
   <br/>
-  <h2>Top 10 Countries By Daily Confirmed Cases</h2>
+  <h3>Top 10 Countries By Total Confirmed Cases</h3>
   <br/>
-  <canvas id="myChart" width="500" height="150"></canvas>
+  <canvas id="myChart1" width="500" height="150"></canvas>
   <script type="text/javascript">
-  var ctx = document.getElementById('myChart');
+  var ctx = document.getElementById('myChart1');
   var myChart = new Chart(ctx, {
       type: 'bar',
       data: {
           labels: [{% for j in country_list_total_confirmed %}"{{ j }}",{% endfor %}],
           datasets: [{
-              label: 'Top 10 countries by confirmed cases',
+              label: 'Top 10 countries by Total Confirmed Cases',
               data: [{% for j in total_confirmed_cases %}{{ j }},{% endfor %}],
-              backgroundColor: '#5e1914', 
+              backgroundColor: '#673AB7', 
               borderWidth: 2
           }]
       },
@@ -53,25 +53,113 @@
   
   <br/>
 
+  <h3>Top 10 Countries By Total COVID Fatalities</h3>
+  <canvas id="myChart2" width="500" height="150"></canvas>
+  <script type="text/javascript">
+  var ctx = document.getElementById('myChart2');
+  var myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+          labels: [{% for j in country_list_total_deaths %}"{{ j }}",{% endfor %}],
+          datasets: [{
+              label: 'Top 10 countries by Total COVID Fatalities',
+              data: [{% for j in total_deaths %}{{ j }},{% endfor %}],
+              backgroundColor: '#D32F2F', 
+              borderWidth: 2
+          }]
+      },
+      options: {
+        legend: {
+            display: false,
+            position: 'bottom'
+         },
+          scales: {
+              yAxes: [{
+                ticks: {
+                    callback: function(label, index, labels) {
+                        return label/1000+'k';
+                    }
+                },
+                scaleLabel: {
+                    display: true,
+                }
+            }],
+              xAxes: [{
+                  ticks: {
+                      fontSize: 14,
+                      beginAtZero: true
+                  }
+              }]
+          } 
+      }
+  });
+  </script>
+
+  <br/>
+
+  <h3>Top 10 Countries By Total Recoveries</h3>
+  <canvas id="myChart3" width="500" height="150"></canvas>
+  <script type="text/javascript">
+  var ctx = document.getElementById('myChart3');
+  var myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+          labels: [{% for j in country_list_total_recovered %}"{{ j }}",{% endfor %}],
+          datasets: [{
+              label: 'Top 10 countries by Total Recoveries',
+              data: [{% for j in total_recovered %}{{ j }},{% endfor %}],
+              backgroundColor: '#008080', 
+              borderWidth: 2
+          }]
+      },
+      options: {
+        legend: {
+            display: false,
+            position: 'bottom'
+         },
+          scales: {
+              yAxes: [{
+                ticks: {
+                    callback: function(label, index, labels) {
+                        return label/1000+'k';
+                    }
+                },
+                scaleLabel: {
+                    display: true,
+                }
+            }],
+              xAxes: [{
+                  ticks: {
+                      fontSize: 14,
+                      beginAtZero: true
+                  }
+              }]
+          } 
+      }
+  });
+  </script>
+
+  <br/>
+
   <style>
       body{
         background-color: #D3D3D3;
       }
     </style>
     <br/>
-    <h2>Top 10 Countries By Daily Cases</h2>
+    <h3>Top 10 Countries By Daily Cases</h3>
     <br/>
-    <canvas id="myChart2" width="500" height="150"></canvas>
+    <canvas id="myChart4" width="500" height="150"></canvas>
     <script type="text/javascript">
-    var ctx = document.getElementById('myChart2');
+    var ctx = document.getElementById('myChart4');
     var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: [{% for j in country_list_new_confirmed %}"{{ j }}",{% endfor %}],
             datasets: [{
-                label: 'Top 10 countries by confirmed cases',
+                label: 'Top 10 Countries by Daily Confirmed Cases',
                 data: [{% for j in new_confirmed_cases %}{{ j }},{% endfor %}],
-                backgroundColor: "#c45850", 
+                backgroundColor: "#673AB7", 
                 borderWidth: 2
             }]
         },
@@ -102,21 +190,22 @@
         }
     });
     </script>
+
     <br/>
-    <br/>
-      <h2>Top 10 Countries By Daily Deaths</h2>
+
+      <h3>Top 10 Countries By Daily Fatalities</h3>
       <br/>
-      <canvas id="myChart3" width="500" height="150"></canvas>
+      <canvas id="myChart5" width="500" height="150"></canvas>
       <script type="text/javascript">
-      var ctx = document.getElementById('myChart3');
+      var ctx = document.getElementById('myChart5');
       var myChart = new Chart(ctx, {
           type: 'bar',
           data: {
               labels: [{% for j in country_list_new_deaths %}"{{ j }}",{% endfor %}],
               datasets: [{
-                  label: 'Top 10 countries By New Deaths',
+                  label: 'Top 10 countries By New Fatalities',
                   data: [{% for j in new_confirmed_deaths %}{{ j }},{% endfor %}],
-                  backgroundColor: '#8D021F', 
+                  backgroundColor: '#D32F2F', 
                   borderWidth: 2
               }]
           },
@@ -147,5 +236,53 @@
       });
       </script>
 
+      <br/>
+
+      <br/>
+
+      <h3>Top 10 Countries By Daily Recovered</h3>
+      <br/>
+      <canvas id="myChart6" width="500" height="150"></canvas>
+      <script type="text/javascript">
+      var ctx = document.getElementById('myChart6');
+      var myChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+              labels: [{% for j in country_list_new_recovered %}"{{ j }}",{% endfor %}],
+              datasets: [{
+                  label: 'Top 10 countries By New Deaths',
+                  data: [{% for j in new_recovered %}{{ j }},{% endfor %}],
+                  backgroundColor: '#008080', 
+                  borderWidth: 2
+              }]
+          },
+          options: {
+            legend: {
+                display: false,
+                position: 'bottom'
+             },
+              scales: {
+                  yAxes: [{
+                    ticks: {
+                        callback: function(label, index, labels) {
+                            return label/1000+'k';
+                        }
+                    },
+                    scaleLabel: {
+                        display: true,
+                    }
+                }],
+                  xAxes: [{
+                      ticks: {
+                          fontSize: 14,
+                          beginAtZero: true
+                      }
+                  }]
+              } 
+          }
+      });
+      </script>
+
+      <br/>
 
 {% endblock %}

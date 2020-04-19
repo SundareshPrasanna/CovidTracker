@@ -31,9 +31,9 @@ def charts(request):
     
     api = api['Countries']
     country_list = [d['Country'].encode('utf-8').decode('utf-8') for d in api]
-    total_confirmed = [d['TotalConfirmed'] for d in api]
-    
     country_list = np.array(country_list)
+    
+    total_confirmed = [d['TotalConfirmed'] for d in api]
     total_confirmed = np.array(total_confirmed)
     
     country_list_total_confirmed = [x for _, x in sorted(zip(total_confirmed,country_list), key=lambda pair: pair[0], reverse=True)][:10]
@@ -49,12 +49,35 @@ def charts(request):
     country_list_new_death = [x for _, x in sorted(zip(new_deaths,country_list), key=lambda pair: pair[0], reverse=True)][:10]
     new_deaths = sorted(new_deaths, reverse=True)[:10]
     
+    total_deaths = [d['TotalDeaths'] for d in api]
+    total_deaths = np.array(total_deaths)
+    country_list_total_deaths = [x for _, x in sorted(zip(total_deaths,country_list), key=lambda pair: pair[0], reverse=True)][:10]
+    total_deaths = sorted(total_deaths, reverse=True)[:10]
+    
+    total_recovered = [d['TotalRecovered'] for d in api]
+    total_recovered = np.array(total_recovered)
+    country_list_total_recovered = [x for _, x in sorted(zip(total_recovered,country_list), key=lambda pair: pair[0], reverse=True)][:10]
+    total_recovered = sorted(total_recovered, reverse=True)[:10]
+    
+    new_recovered = [d['NewRecovered'] for d in api]
+    new_recovered = np.array(new_recovered)
+    country_list_new_recovered = [x for _, x in sorted(zip(new_recovered,country_list), key=lambda pair: pair[0], reverse=True)][:10]
+    new_recovered = sorted(new_recovered, reverse=True)[:10]
+    
     return render(request, 'charts.html', {'country_list_total_confirmed':country_list_total_confirmed, 'covid_date':covid_date_aware, 
-                                           'total_confirmed_cases':total_confirmed, 'new_confirmed_cases':new_confirmed,
+                                           'total_confirmed_cases':total_confirmed, 
+                                           'total_recovered':total_recovered, 'total_deaths':total_deaths,
+                                           'new_confirmed_cases':new_confirmed,
                                            'country_list_new_confirmed':country_list_new_confirmed,
-                                           'new_confirmed_deaths':new_deaths,'country_list_new_deaths':country_list_new_death,'api':api})
+                                           'new_confirmed_deaths':new_deaths,
+                                           'country_list_new_deaths':country_list_new_death,
+                                           'country_list_total_deaths':country_list_total_deaths,
+                                           'country_list_total_recovered':country_list_total_recovered,
+                                           'country_list_new_recovered':country_list_new_recovered,
+                                           'new_recovered':new_recovered,
+                                           'api':api})
 
-def india(request):
+def curves(request):
     import json
     import requests
     from datetime import datetime
@@ -67,6 +90,7 @@ def india(request):
     country_api_request = requests.get("https://api.covid19api.com/countries")
     country_api = json.loads(country_api_request.content)
     countries_list = [d['Country'] for d in country_api]
+    countries_list.sort()
     
     if request.method == 'POST':
         country_selected = request.POST['dropdown_country']
@@ -120,7 +144,7 @@ def india(request):
         # #date_list = [datetime.strptime(date, "%Y-%m-%dT%H:%M:%SZ").date() for date in dates]
             
         
-        return render(request, 'india.html', {'country':country_selected, 'country_list':countries_list,
+        return render(request, 'curves.html', {'country_list':countries_list,
                                               'confirmed_cases':confirmed_cases, 'recovered':recovered, 
                                               'deaths':deaths, 'date':date_list })
                                             #   , 'yhat_confirmed': yhat_confirmed,
@@ -141,7 +165,7 @@ def india(request):
         dates = [d['Date'] for d in api]
         date_list = [datetime.strptime(date, "%Y-%m-%dT%H:%M:%SZ").date() for date in dates]
         
-        return render(request, 'india.html', {'country':country,'confirmed_cases':confirmed_cases, 'recovered':recovered, 'deaths':deaths, 'date':date_list, 
+        return render(request, 'curves.html', {'country':country,'confirmed_cases':confirmed_cases, 'recovered':recovered, 'deaths':deaths, 'date':date_list, 
                                             'country_list':countries_list})
 
 
