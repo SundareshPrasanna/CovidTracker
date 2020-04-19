@@ -170,4 +170,6 @@ def curves(request):
 
 
 def about(request):
-    return render(request, 'about.html', {})
+    import requests
+    api_request = requests.get("https://api.covid19api.com/total/dayone/country/india")
+    return render(request, 'about.html', {'api':api_request})
