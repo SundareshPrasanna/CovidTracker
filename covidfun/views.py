@@ -83,7 +83,7 @@ def curves(request):
     from datetime import datetime
     from django.utils import timezone
     import pandas as pd
-    from fbprophet import Prophet
+    #from fbprophet import Prophet
     import numpy as np
     
     
