@@ -144,7 +144,7 @@ def curves(request):
         # #date_list = [datetime.strptime(date, "%Y-%m-%dT%H:%M:%SZ").date() for date in dates]
             
         
-        return render(request, 'curves.html', {'country_list':countries_list,
+        return render(request, 'curves.html', {'country_list':countries_list,'country':country_selected,
                                               'confirmed_cases':confirmed_cases, 'recovered':recovered, 
                                               'deaths':deaths, 'date':date_list })
                                             #   , 'yhat_confirmed': yhat_confirmed,
