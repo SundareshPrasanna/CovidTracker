@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block content %}
+    <div class="jumbotron h-80" >
+        <h1 class="display-4">Welcome to Covid Tracker Website</h1>
+        <br/>
+        <p class="lead">Your source for upto date COVID numbers</p>
+        <br/>
+        <p class="lead">Numbers as on date : {{ covid_date }} UTC</p>
+        <br/>
+        <div class="row">
+                <div class="col-sm-6">
+                  <div class="card text-center border-secondary mb-3">
+                    <div class="card-body">
+                      <h5 class="card-title text-secondary">Global Total Cases Confirmed</h5>
+                      <p class="card-text">{{ api.Global.TotalConfirmed|intcomma }}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="card text-center border-secondary mb-3">
+                    <div class="card-body">
+                      <h5 class="card-title text-secondary">Global New Cases Confirmed</h5>
+                      <p class="card-text">{{ api.Global.NewConfirmed|intcomma }}</p>
+                    </div>
+                  </div>
+                </div>
+        </div>
+        <br/>
+        <div class="row">
+                <div class="col-sm-6">
+                  <div class="card text-center border-danger mb-3">
+                    <div class="card-body">
+                      <h5 class="card-title text-danger">Global Total Deaths Confirmed Today</h5>
+                      <p class="card-text">{{ api.Global.NewDeaths|intcomma }}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="card text-center border-danger mb-3">
+                    <div class="card-body">
+                      <h5 class="card-title text-danger">Global Total Deaths Confirmed</h5>
+                      <p class="card-text">{{ api.Global.TotalDeaths|intcomma }}</p>
+                    </div>
+                  </div>
+                </div>
+        </div>
+        <br/>
+        <div class="row">
+                <div class="col-sm-6">
+                  <div class="card text-center border-success mb-3">
+                    <div class="card-body">
+                      <h5 class="card-title text-success">Global Total Cases Recovered Today</h5>
+                      <p class="card-text">{{ api.Global.NewRecovered|intcomma }}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="card text-center border-success mb-3">
+                    <div class="card-body">
+                      <h5 class="card-title text-success">Global Cases Recovered Till Date</h5>
+                      <p class="card-text">{{ api.Global.TotalRecovered|intcomma }}</p>
+                    </div>
+                  </div>
+                </div>
+        </div>
+      </div>
+    
+{% endblock %}

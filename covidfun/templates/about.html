@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    html {height: 100%; width:100%;}
+    body {
+        height: 100%; 
+        width:100%;
+        background-color: #D3D3D3;
+        }
+</style>
+    <div class = "container h-100 d-flex justify-content-center">
+        <div class="row align-items-center h-100">
+            <div class = "col-12">
+                <div class="card bg-dark text-white">
+                    <div class="row no-gutters">
+                    <div class="col-md-4">
+                        <img class="card-img" src="{% static '/images/pic.jpg' %}" />
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                        <h3 class="card-title">Website created as a challenge in 5 hrs :)</h3>
+                        <br/>
+                        <p class="card-text">Page Created by Sundaresh. A Data scientist & Full stack developer @Royal Dutch Shell</p>
+                        <p class="card-text">Leveraged stack: Django, Bootstrap CSS, Chart.js</p>
+                        <br/>
+                        <p class="card-text">Backend data thanks to <a href="https://covid19api.com/" target="_blank">COVID-19 API</a></p>
+                        <div class="card-text">
+                                <a href="https://www.linkedin.com/in/sundaresh-prasanna-chandran-17825811a/" class="card-link fa fa-linkedin" 
+                                text-align: center></a>&nbsp;
+                                <a href="https://www.facebook.com/sundaresh.chandran" class="card-link fa fa-facebook"></a>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

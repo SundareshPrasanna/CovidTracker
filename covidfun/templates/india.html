@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+        body{
+          background-color: #D3D3D3;
+        }
+      </style>
+      <h2>Progression Of the Disease From First Recorded History for {{country}}</h2>
+
+      <br/>
+      
+      <form method="POST">
+            {% csrf_token %}
+            <select name="dropdown_country" onchange="this.form.submit()">
+            {% for entry in country_list %}
+                <option value="{{ entry }}">{{ entry }}</option> 
+            {% endfor %}
+            </select>
+        </form>
+
+      <br/>
+
+      <canvas id="myChart" width="500" height="300"></canvas>
+      <script type="text/javascript">
+        var ctx = document.getElementById('myChart');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [{% for j in date %}"{{ j }}",{% endfor %}],
+                datasets: [{
+                    label: 'Confirmed Cases Over Time',
+                    data: [{% for j in confirmed_cases %}{{ j }},{% endfor %}],
+                    backgroundColor: '#ea9085',
+                    borderColor: "#512b58", 
+                    borderWidth: 2,
+                    fill: false
+                },
+                {
+                    label: 'Deaths Over Time',
+                    data: [{% for j in deaths %}{{ j }},{% endfor %}],
+                    backgroundColor: '#eb4559',
+                    borderColor: "#eb4559", 
+                    borderWidth: 2,
+                    fill: false
+                },
+                {
+                    label: 'Recoveries Over Time',
+                    data: [{% for j in recovered %}{{ j }},{% endfor %}],
+                    backgroundColor: '#cae8d5',
+                    borderColor: "#204051", 
+                    borderWidth: 2,
+                    fill: false
+                }
+                ],
+            },
+            options: {
+                legend: {
+                    display: true,
+                    position: 'bottom'
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            callback: function(label, index, labels) {
+                                return label/1000+'k';
+                            }
+                        },
+                        scaleLabel: {
+                            display: true,
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            fontSize: 14,
+                            beginAtZero: true
+                        }
+                    }]
+                } 
+            }
+        });
+      </script>
+
+{% endblock %}
